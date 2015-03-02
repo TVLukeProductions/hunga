@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<PreferenceScreen
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <PreferenceCategory
+        android:title="@string/pref_basesettings_title"
+        android:key="pref_basesettings_title">
+        <ListPreference
+            android:key="pref_typeselector"
+            android:icon="@drawable/ic_action_settings"
+            android:title="@string/pref_typeselector"
+            android:entryValues="@array/pref_selecttype_names"
+            android:entries="@array/pref_selecttype_entries"
+            android:defaultValue="@string/pref_typeselector_default">
+        </ListPreference>
+    </PreferenceCategory>
+    <PreferenceCategory
+        android:title="@string/pref_reload_title"
+        android:key="pref_reload_title">
+    </PreferenceCategory>
+    <PreferenceCategory
+        android:title="@string/pref_developers_title"
+        android:key="pref_developers_title">
+        <CheckBoxPreference
+            android:title="@string/pref_logging"
+            android:key="pref_looging"
+            android:summary="@string/pref_logging_summary"
+            android:icon="@drawable/ic_action_tag"
+            android:defaultValue="false">
+        </CheckBoxPreference>
+        <CheckBoxPreference
+            android:title="@string/pref_logging_file"
+            android:key="pref_looging_file"
+            android:icon="@drawable/ic_action_paste"
+            android:defaultValue="false">
+        </CheckBoxPreference>
+    </PreferenceCategory>
+</PreferenceScreen>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="hunga.lukeslog.de" >
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@drawable/hunga72"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme" >
+        <activity
+            android:name="hunga.lukeslog.de.ui.Search"
+            android:label="@string/app_name" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".ui.RecipieList"></activity>
+        <activity android:name=".ui.SettingsActivity"></activity>
+
+        <service android:name="hunga.lukeslog.de.support.SupportService" />
+        <service android:name="hunga.lukeslog.de.rest.RestService" />
+
+        <meta-data android:name="AA_DB_NAME" android:value="hunga.db" />
+        <meta-data android:name="AA_DB_VERSION" android:value="3" />
+
+    </application>
+
+</manifest>
