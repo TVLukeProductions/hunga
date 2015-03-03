@@ -7,19 +7,29 @@
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:id="@+id/line">
 
-        <LinearLayout
-            android:orientation="horizontal"
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
             <TextView
-                android:layout_width="300dp"
+                android:layout_width="50dp"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="500 g"
+                android:id="@+id/weight" />
+
+            <TextView
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:text="Rezeptname"
-                android:id="@+id/name" />
+                android:id="@+id/name"
+                android:layout_gravity="center"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -27,23 +37,44 @@
                 android:textAppearance="?android:attr/textAppearanceMedium"
                 android:textColor="#A8A8A8"
                 android:text="x phe"
-                android:id="@+id/mainV" />
+                android:id="@+id/mainV"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true" />
 
-            </LinearLayout>
+            </RelativeLayout>
 
 
-        <LinearLayout
+        <RelativeLayout
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
             <TextView
-                android:layout_width="300dp"
+                android:layout_width="50dp"
+                android:layout_height="match_parent"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:id="@+id/weight2" />
+
+            <TextView
+                android:layout_width="240dp"
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:text=" ingredients.... ingredients...... ingredient..... ingredient.... ingre"
                 android:textColor="#A8A8A8"
-                android:id="@+id/ingredients" />
+                android:id="@+id/ingredients"
+                android:layout_toLeftOf="@+id/secondV"
+                android:layout_toStartOf="@+id/secondV"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentStart="true" />
+
+            <TextView
+                android:layout_width="10dp"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceSmall"
+                android:textColor="#A8A8A8"
+                android:text=" "
+                android:id="@+id/space" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -51,9 +82,12 @@
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:textColor="#A8A8A8"
                 android:text="x kcal"
-                android:id="@+id/secondV" />
+                android:id="@+id/secondV"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true" />
 
-        </LinearLayout>
+        </RelativeLayout>
 
     </LinearLayout>
 </LinearLayout>

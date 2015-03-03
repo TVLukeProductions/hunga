@@ -5,7 +5,7 @@ android {
     buildToolsVersion "20.0.0"
 
     defaultConfig {
-        applicationId "hunga.lukeslog.de"
+        applicationId "de.lukeslog.hunga"
         minSdkVersion 14
         targetSdkVersion 21
         versionCode 1
