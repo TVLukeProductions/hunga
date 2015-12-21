@@ -10,8 +10,6 @@ import android.widget.BaseAdapter;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.activeandroid.query.Select;
-
 import java.util.List;
 
 import de.lukeslog.hunga.R;
@@ -34,7 +32,7 @@ public class ProposalAdapter extends BaseAdapter {
 
     @Override
     public int getCount() {
-        return new Select().from(Proposal.class).count();
+        return proposals.size();
     }
 
     @Override
@@ -60,13 +58,11 @@ public class ProposalAdapter extends BaseAdapter {
     }
 
     private void setRecipieInfo(int position, View itemView) {
-        List<Proposal> searchresults;
         if(position%2==0) {
             LinearLayout layout = (LinearLayout) itemView.findViewById(R.id.line);
-            layout.setBackgroundColor(Color.parseColor("#d3ecb0"));
+            layout.setBackgroundColor(Color.parseColor("#FFFFFF"));
         }
-        searchresults = new Select().from(Proposal.class).execute();
-        Proposal proposal = searchresults.get(position);
+        Proposal proposal = proposals.get(position);
         TextView nameView = (TextView) itemView.findViewById(R.id.name);
         TextView mainValue = (TextView) itemView.findViewById(R.id.mainV);
         TextView secondValue = (TextView) itemView.findViewById(R.id.secondV);
@@ -74,17 +70,13 @@ public class ProposalAdapter extends BaseAdapter {
         TextView weightText = (TextView) itemView.findViewById(R.id.weight);
 
         nameView.setText(proposal.getName());
-        mainValue.setText((int)proposal.getPhe() + " phe");
-        secondValue.setText((int)proposal.getKcal()+" kcal");
+        mainValue.setText((int)proposal.getKcal()+" kcal");
+        secondValue.setText((int)proposal.getWeight()+" g");
         if(!FoodCombinationHelper.containsItemGood(proposal)){
             weightText.setText(""+(int)proposal.getWeight()+" g");
         } else {
-            weightText.setText(""+(int)proposal.getFactor()+" s");
+            weightText.setText(""+proposal.getFactor()+" s");
         }
-        ingrediensText.setText(getIngredients(proposal));
-    }
-
-    private String getIngredients(FoodCombination fc) {
-        return RecipeHelper.getIngredientsAsString(fc);
+        ingrediensText.setText(FoodCombinationHelper.getIngredientsEquivGroupAsString(proposal));
     }
 }

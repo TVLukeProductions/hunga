@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:id="@+id/action_star"
+        android:title="@string/action_star"
+        android:orderInCategory="80"
+        android:icon="@drawable/ic_action_star_0"
+        android:showAsAction="always" />
+
+    <item android:id="@+id/new_food_with_same_barcode"
+        android:title="@string/new_food_with_same_barcode"
+        android:orderInCategory="100"
+        android:showAsAction="never" />
+
+</menu>

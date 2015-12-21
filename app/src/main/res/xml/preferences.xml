@@ -3,8 +3,25 @@
 <PreferenceScreen
     xmlns:android="http://schemas.android.com/apk/res/android">
     <PreferenceCategory
+        android:title="@string/account"
+        android:key="pref_acount">
+    </PreferenceCategory>
+    <PreferenceCategory
+        android:title="@string/pref_goalsetting_title"
+        android:key="pref_goalsetting_title">
+        <EditTextPreference
+            android:key="goal_kcal"
+            android:title="@string/goal_kcal"
+            android:inputType="number"/>
+        <EditTextPreference
+            android:key="goal_liquid"
+            android:title="@string/goal_liquid"
+            android:inputType="number"/>
+    </PreferenceCategory>
+    <PreferenceCategory
         android:title="@string/pref_basesettings_title"
-        android:key="pref_basesettings_title">
+        android:key="pref_basesettings_title"
+        android:summary="@string/explain_basesettings">
         <ListPreference
             android:key="pref_typeselector"
             android:icon="@drawable/ic_action_settings"
@@ -13,10 +30,29 @@
             android:entries="@array/pref_selecttype_entries"
             android:defaultValue="@string/pref_typeselector_default">
         </ListPreference>
+        <EditTextPreference
+            android:key="pref_minfood"
+            android:title="@string/pref_minimum_food"
+            android:inputType="number"/>
+        <EditTextPreference
+            android:key="pref_maxfood"
+            android:title="@string/pref_maximum_food"
+            android:inputType="number"/>
     </PreferenceCategory>
     <PreferenceCategory
         android:title="@string/pref_reload_title"
         android:key="pref_reload_title">
+    </PreferenceCategory>
+    <CheckBoxPreference
+        android:title="@string/pref_log_phe"
+        android:key="pref_log_phe"
+        android:icon="@drawable/ic_action_paste"
+        android:defaultValue="false">
+    </CheckBoxPreference>
+
+    <PreferenceCategory
+        android:title="@string/pref_errors"
+        android:key="pref_errors">
     </PreferenceCategory>
     <PreferenceCategory
         android:title="@string/pref_developers_title"
@@ -25,7 +61,7 @@
             android:title="@string/pref_logging"
             android:key="pref_looging"
             android:summary="@string/pref_logging_summary"
-            android:icon="@drawable/ic_action_tag"
+            android:icon="@drawable/ic_action_tags"
             android:defaultValue="false">
         </CheckBoxPreference>
         <CheckBoxPreference

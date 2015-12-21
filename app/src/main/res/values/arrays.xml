@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="pref_selecttype_names" >
-        <item>phe</item>
         <item>kcal</item>
+        <item>Fett</item>
     </string-array>
     <string-array name="pref_selecttype_entries">
-        <item>phe</item>
         <item>kcal</item>
+        <item>fat</item>
     </string-array>
 </resources>

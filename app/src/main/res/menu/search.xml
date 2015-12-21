@@ -2,10 +2,33 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".Search" >
 
-    <item android:id="@+id/action_settings"
-        android:title="@string/action_settings"
+    <item android:id="@+id/action_add"
+        android:title="@string/action_ad"
+        android:orderInCategory="100"
+        android:icon="@drawable/ic_action_add"
+        android:showAsAction="always" />
+
+    <item android:id="@+id/action_recepies"
+        android:title="@string/action_recepies"
+        android:orderInCategory="100"
+        android:icon="@drawable/ic_action_restaurant"
+        android:showAsAction="always" />
+
+    <item android:id="@+id/action_foods"
+        android:title="@string/action_food"
+        android:orderInCategory="100"
+        android:icon="@drawable/ic_action_food"
+        android:showAsAction="always" />
+
+    <item android:id="@+id/action_protocoll"
+        android:title="@string/action_protocoll"
+        android:icon="@drawable/ic_action_settings"
         android:orderInCategory="100"
         android:showAsAction="never" />
 
-
+    <item android:id="@+id/action_settings"
+        android:title="@string/action_settings"
+        android:icon="@drawable/ic_action_settings"
+        android:orderInCategory="100"
+        android:showAsAction="never" />
 </menu>

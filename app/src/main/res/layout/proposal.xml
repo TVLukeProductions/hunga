@@ -2,21 +2,965 @@
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="#FFFFFF">
 
-    <TextView
+    <LinearLayout
+        android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="Large Text"
-        android:id="@+id/propname" />
+        android:layout_marginLeft="2dp"
+        android:layout_marginRight="2dp">
 
-    <TextView
+        <ImageView
+            android:layout_width="72dp"
+            android:layout_height="72dp"
+            android:layout_marginBottom="2dp"
+            android:id="@+id/imageView"
+            android:src="@drawable/ic_action_restaurant" />
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="2dp"
+                android:textColor="#A8A8A8"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="Large Text With The Name Of The Recipe"
+                android:id="@+id/propname" />
+
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="#A8A8A8"
+                android:text="Feste Proportionen"
+                android:id="@+id/fixedProportionsCheckBox" />
+
+        </LinearLayout>
+
+        </LinearLayout>
+
+
+    <LinearLayout
+        android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
-        android:text="phe"
-        android:id="@+id/textView2" />
+        android:layout_gravity="center_horizontal">
+
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="2dp"
+            android:background="#99cc00"
+            android:textColor="#FFFFFF"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:gravity="center"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="@string/omnomnom"
+            android:layout_weight="1"
+            android:id="@+id/omnomnom" />
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="50dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginBottom="2dp"
+            android:background="#99cc00"
+            android:textColor="#FFFFFF"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:gravity="center"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="@string/store"
+            android:layout_weight="1"
+            android:id="@+id/storeRec" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:background="#99cc00">
+
+    </LinearLayout>
+
+
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:id="@+id/table">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#99cc00"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp">
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/topOfTable">
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp">
+
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="1dp"
+                android:layout_height="fill_parent"
+                android:layout_marginLeft="0dp"
+                android:layout_marginRight="0dp"
+                android:background="#99cc00"/>
+
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="Wert"
+                android:textColor="#99cc00"
+                android:id="@+id/labelcolllumns"
+                android:layout_weight="1" />
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="1dp"
+                android:layout_height="fill_parent"
+                android:layout_marginLeft="0dp"
+                android:layout_marginRight="0dp"
+                android:background="#99cc00"/>
+
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="100g"
+                android:gravity="center"
+                android:textColor="#99cc00"
+                android:id="@+id/hundertg"
+                android:layout_weight="1" />
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="1dp"
+                android:layout_height="fill_parent"
+                android:layout_marginLeft="0dp"
+                android:layout_marginRight="0dp"
+                android:background="#99cc00"/>
+
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="Portion"
+                android:gravity="center"
+                android:textColor="#99cc00"
+                android:id="@+id/portion"
+                android:layout_weight="1" />
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="1dp"
+                android:layout_height="fill_parent"
+                android:layout_marginLeft="0dp"
+                android:layout_marginRight="0dp"
+                android:background="#99cc00"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#99cc00"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp">
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#FFFFFF"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp">
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#99cc00"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp">
+        </LinearLayout>
+
+
+
+
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp">
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="1dp"
+                android:layout_height="fill_parent"
+                android:layout_marginLeft="0dp"
+                android:layout_marginRight="0dp"
+                android:background="#99cc00"/>
+
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="@string/kcalper100g"
+                android:textColor="#99cc00"
+                android:id="@+id/kcallabel"
+                android:layout_weight="1" />
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="1dp"
+                android:layout_height="fill_parent"
+                android:layout_marginLeft="0dp"
+                android:layout_marginRight="0dp"
+                android:background="#99cc00"/>
+
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="xxx"
+                android:gravity="center"
+                android:textColor="#99cc00"
+                android:id="@+id/kcalvalue"
+                android:layout_weight="1" />
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="1dp"
+                android:layout_height="fill_parent"
+                android:layout_marginLeft="0dp"
+                android:layout_marginRight="0dp"
+                android:background="#99cc00"/>
+
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="xxx"
+                android:gravity="center"
+                android:textColor="#99cc00"
+                android:id="@+id/kcalvalueportion"
+                android:layout_weight="1" />
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="1dp"
+                android:layout_height="fill_parent"
+                android:layout_marginLeft="0dp"
+                android:layout_marginRight="0dp"
+                android:background="#99cc00"/>
+
+        </LinearLayout>
+        </LinearLayout>
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/restOfTable">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#99cc00"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp">
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp">
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="1dp"
+                android:layout_height="fill_parent"
+                android:layout_marginLeft="0dp"
+                android:layout_marginRight="0dp"
+                android:background="#99cc00"/>
+
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="@string/fatper100g"
+                android:textColor="#99cc00"
+                android:id="@+id/fatlabel"
+                android:layout_weight="1" />
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="1dp"
+                android:layout_height="fill_parent"
+                android:layout_marginLeft="0dp"
+                android:layout_marginRight="0dp"
+                android:background="#99cc00"/>
+
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="xxx"
+                android:gravity="center"
+                android:textColor="#99cc00"
+                android:id="@+id/fatvalue"
+                android:layout_weight="1" />
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="1dp"
+                android:layout_height="fill_parent"
+                android:layout_marginLeft="0dp"
+                android:layout_marginRight="0dp"
+                android:background="#99cc00"/>
+
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="xxx"
+                android:gravity="center"
+                android:textColor="#99cc00"
+                android:id="@+id/fatvaluePortion"
+                android:layout_weight="1" />
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="1dp"
+                android:layout_height="fill_parent"
+                android:layout_marginLeft="0dp"
+                android:layout_marginRight="0dp"
+                android:background="#99cc00"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#99cc00"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"/>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp">
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="1dp"
+                android:layout_height="fill_parent"
+                android:layout_marginLeft="0dp"
+                android:layout_marginRight="0dp"
+                android:background="#99cc00"/>
+
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="-11dp"
+                android:text="@string/satfatper100gshort"
+                android:textColor="#99cc00"
+                android:id="@+id/satfatlabel"
+                android:layout_weight="1" />
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="1dp"
+                android:layout_height="fill_parent"
+                android:layout_marginLeft="0dp"
+                android:layout_marginRight="0dp"
+                android:background="#99cc00"/>
+
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="xxx"
+                android:gravity="center"
+                android:textColor="#99cc00"
+                android:id="@+id/satFatvalue"
+                android:layout_weight="1" />
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="1dp"
+                android:layout_height="fill_parent"
+                android:layout_marginLeft="0dp"
+                android:layout_marginRight="0dp"
+                android:background="#99cc00"/>
+
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="xxx"
+                android:gravity="center"
+                android:textColor="#99cc00"
+                android:id="@+id/satfatvaluePortion"
+                android:layout_weight="1" />
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="1dp"
+                android:layout_height="fill_parent"
+                android:layout_marginLeft="0dp"
+                android:layout_marginRight="0dp"
+                android:background="#99cc00"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#99cc00"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp">
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp">
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="1dp"
+                android:layout_height="fill_parent"
+                android:layout_marginLeft="0dp"
+                android:layout_marginRight="0dp"
+                android:background="#99cc00"/>
+
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="@string/carboper100g"
+                android:textColor="#99cc00"
+                android:id="@+id/carblabel"
+                android:layout_weight="1" />
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="1dp"
+                android:layout_height="fill_parent"
+                android:layout_marginLeft="0dp"
+                android:layout_marginRight="0dp"
+                android:background="#99cc00"/>
+
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="xxx"
+                android:gravity="center"
+                android:textColor="#99cc00"
+                android:id="@+id/carbvalue"
+                android:layout_weight="1" />
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="1dp"
+                android:layout_height="fill_parent"
+                android:layout_marginLeft="0dp"
+                android:layout_marginRight="0dp"
+                android:background="#99cc00"/>
+
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="xxx"
+                android:gravity="center"
+                android:textColor="#99cc00"
+                android:id="@+id/carbvaluePortion"
+                android:layout_weight="1" />
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="1dp"
+                android:layout_height="fill_parent"
+                android:layout_marginLeft="0dp"
+                android:layout_marginRight="0dp"
+                android:background="#99cc00"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#99cc00"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp">
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp">
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="1dp"
+                android:layout_height="fill_parent"
+                android:layout_marginLeft="0dp"
+                android:layout_marginRight="0dp"
+                android:background="#99cc00"/>
+
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="-11dp"
+                android:text="@string/sugar100g"
+                android:textColor="#99cc00"
+                android:id="@+id/sugarlabel"
+                android:layout_weight="1" />
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="1dp"
+                android:layout_height="fill_parent"
+                android:layout_marginLeft="0dp"
+                android:layout_marginRight="0dp"
+                android:background="#99cc00"/>
+
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="xxx"
+                android:gravity="center"
+                android:textColor="#99cc00"
+                android:id="@+id/sugarvalue"
+                android:layout_weight="1" />
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="1dp"
+                android:layout_height="fill_parent"
+                android:layout_marginLeft="0dp"
+                android:layout_marginRight="0dp"
+                android:background="#99cc00"/>
+
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="xxx"
+                android:gravity="center"
+                android:textColor="#99cc00"
+                android:id="@+id/sugarvaluePortion"
+                android:layout_weight="1" />
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="1dp"
+                android:layout_height="fill_parent"
+                android:layout_marginLeft="0dp"
+                android:layout_marginRight="0dp"
+                android:background="#99cc00"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#99cc00"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"/>
+
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp">
+
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="1dp"
+                android:layout_height="fill_parent"
+                android:layout_marginLeft="0dp"
+                android:layout_marginRight="0dp"
+                android:background="#99cc00"/>
+
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="@string/proteinper100g"
+                android:textColor="#99cc00"
+                android:id="@+id/proteinlabel"
+                android:layout_weight="1" />
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="1dp"
+                android:layout_height="fill_parent"
+                android:layout_marginLeft="0dp"
+                android:layout_marginRight="0dp"
+                android:background="#99cc00"/>
+
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="xxx"
+                android:gravity="center"
+                android:textColor="#99cc00"
+                android:id="@+id/proteinvalue"
+                android:layout_weight="1" />
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="1dp"
+                android:layout_height="fill_parent"
+                android:layout_marginLeft="0dp"
+                android:layout_marginRight="0dp"
+                android:background="#99cc00"/>
+
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="xxx"
+                android:gravity="center"
+                android:textColor="#99cc00"
+                android:id="@+id/proteinvalueportion"
+                android:layout_weight="1" />
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="1dp"
+                android:layout_height="fill_parent"
+                android:layout_marginLeft="0dp"
+                android:layout_marginRight="0dp"
+                android:background="#99cc00"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#99cc00"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"/>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp">
+
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="1dp"
+                android:layout_height="fill_parent"
+                android:layout_marginLeft="0dp"
+                android:layout_marginRight="0dp"
+                android:background="#99cc00"/>
+
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="@string/saltper100g"
+                android:textColor="#99cc00"
+                android:id="@+id/saltlabel"
+                android:layout_weight="1" />
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="1dp"
+                android:layout_height="fill_parent"
+                android:layout_marginLeft="0dp"
+                android:layout_marginRight="0dp"
+                android:background="#99cc00"/>
+
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="xxx"
+                android:gravity="center"
+                android:textColor="#99cc00"
+                android:id="@+id/saltvalue"
+                android:layout_weight="1" />
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="1dp"
+                android:layout_height="fill_parent"
+                android:layout_marginLeft="0dp"
+                android:layout_marginRight="0dp"
+                android:background="#99cc00"/>
+
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="xxx"
+                android:gravity="center"
+                android:textColor="#99cc00"
+                android:id="@+id/saltvalueportion"
+                android:layout_weight="1" />
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="1dp"
+                android:layout_height="fill_parent"
+                android:layout_marginLeft="0dp"
+                android:layout_marginRight="0dp"
+                android:background="#99cc00"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#99cc00"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"/>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp">
+
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="1dp"
+                android:layout_height="fill_parent"
+                android:layout_marginLeft="0dp"
+                android:layout_marginRight="0dp"
+                android:background="#99cc00"/>
+
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="phe"
+                android:textColor="#99cc00"
+                android:id="@+id/phelabel"
+                android:layout_weight="1" />
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="1dp"
+                android:layout_height="fill_parent"
+                android:layout_marginLeft="0dp"
+                android:layout_marginRight="0dp"
+                android:background="#99cc00"/>
+
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="xxx"
+                android:gravity="center"
+                android:textColor="#99cc00"
+                android:id="@+id/phevalue"
+                android:layout_weight="1" />
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="1dp"
+                android:layout_height="fill_parent"
+                android:layout_marginLeft="0dp"
+                android:layout_marginRight="0dp"
+                android:background="#99cc00"/>
+
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceLarge"
+                android:text="xxx"
+                android:gravity="center"
+                android:textColor="#99cc00"
+                android:id="@+id/phevalueportion"
+                android:layout_weight="1" />
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="1dp"
+                android:layout_height="fill_parent"
+                android:layout_marginLeft="0dp"
+                android:layout_marginRight="0dp"
+                android:background="#99cc00"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#99cc00"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"/>
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="footnote"
+            android:textColor="#99cc00"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="0dp"
+            android:id="@+id/footnote" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text=""
+            android:textColor="#99cc00"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="0dp"
+            android:id="@+id/footnote2" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="310dp"
+            android:layout_height="30dp"
+            android:id="@+id/alcoholic"
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/customshape">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/imageView2"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:src="@drawable/alcoholic" />
+
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="@string/containsAlcohol"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="1dp"
+                android:textColor="#B22222"
+                android:layout_weight="1" />
+
+
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="310dp"
+            android:layout_height="30dp"
+            android:layout_marginTop="1dp"
+            android:id="@+id/caffein"
+            android:layout_gravity="center_horizontal"
+            android:background="@drawable/customshape">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/imageView3"
+                android:layout_marginLeft="4dp"
+                android:layout_marginRight="4dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="5dp"
+                android:src="@drawable/caffein" />
+
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="@string/containsCaffeine"
+                android:layout_marginTop="5dp"
+                android:layout_marginBottom="1dp"
+                android:textColor="#B22222"
+                android:layout_weight="1" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+
+
+
+
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="fill_parent"
+        android:layout_height="1dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
+        android:background="#99cc00">
+
+    </LinearLayout>
 
     <ScrollView
         android:layout_width="match_parent"
@@ -27,8 +971,11 @@
             android:orientation="vertical"
             android:layout_width="fill_parent"
             android:layout_height="fill_parent"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
             android:id="@+id/ingredientlayout">
 
             </LinearLayout>
     </ScrollView>
+
 </LinearLayout>
