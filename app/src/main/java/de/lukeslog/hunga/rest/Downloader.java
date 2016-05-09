@@ -2,12 +2,14 @@ package de.lukeslog.hunga.rest;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.preference.PreferenceManager;
 
 import com.activeandroid.query.Delete;
 import com.activeandroid.query.Select;
 import com.activeandroid.util.Log;
 
 import org.joda.time.DateTime;
+import org.joda.time.Days;
 import org.joda.time.chrono.StrictChronology;
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -43,17 +45,18 @@ public class Downloader {
         new Thread(new Runnable() {
             public void run() {
                 readAndStoreFood(userAcc);
-                readAndStoreRecepies();
+                readAndStoreRecepies(userAcc, context);
                 readAndStoreConsumtion(userAcc, context);
             }
         }).start();
 
     }
 
-    private static void readAndStoreRecepies() {
+    private static void readAndStoreRecepies(String accid, Context ctx) {
         try {
             Logger.d(TAG, "getRecipies");
-            URL oracle = new URL(recepieURL);
+
+            URL oracle = new URL(recepieURL+"?"+accid);
             BufferedReader in = new BufferedReader(new InputStreamReader(oracle.openStream()));
 
             String inputLine;
@@ -195,6 +198,7 @@ public class Downloader {
                     f.setEquivalenceGroup(food.getString("Equivalencegroup"));
                     f.setContainsAlcohol(food.getBoolean("containsAlcohol"));
                     f.setContainsCaffein(food.getBoolean("containsCaffine"));
+                    f.setComment("");
                     f.save();
                 } catch(Exception e) {
                     e.printStackTrace();
@@ -224,15 +228,29 @@ public class Downloader {
                     JSONArray eaten = new JSONArray(tempf);
                     Float kcalSum = 0.0f;
                     Float liquidSum = 0.0f;
+                    Float pheSum = 0.0f;
                     for(int i=0; i<eaten.length(); i++) {
                         JSONObject mealItem = eaten.getJSONObject(i);
                         String barcodeForUse = mealItem.getString("barcodeForUse");
                         double ammount = mealItem.getDouble("amount");
-                        Food food = new Select().from(Food.class).where("barcodeForUse = ?", barcodeForUse).executeSingle();
-                        float kcal = (float) (food.getKcal100() / 100.0f * ammount);
-                        kcalSum = kcalSum + kcal;
-                        if(!food.isSolid()) {
-                            liquidSum = (float) (liquidSum + ammount);
+                        DateTime now = new DateTime();
+                        now = now.withHourOfDay(0);
+                        now = now.withMinuteOfHour(0);
+                        now = now.withSecondOfMinute(0);
+                        DateTime then = new DateTime(mealItem.getLong("timestamp"));
+                        then = then.withHourOfDay(0);
+                        then = then.withMinuteOfHour(0);
+                        then = then.withSecondOfMinute(0);
+                        int daysbetween = 7 - Days.daysBetween(then, now).getDays();
+                        if(daysbetween == 7) {
+                            Food food = new Select().from(Food.class).where("barcodeForUse = ?", barcodeForUse).executeSingle();
+                            float kcal = (float) (food.getKcal100() / 100.0f * ammount);
+                            float phe = (float) (food.getPhe100() / 100.0f * ammount);
+                            kcalSum = kcalSum + kcal;
+                            pheSum = pheSum + phe;
+                            if (!food.isSolid()) {
+                                liquidSum = (float) (liquidSum + ammount);
+                            }
                         }
                         ProtokollItem protokollItem = new ProtokollItem();
                         protokollItem.setTimestamp(mealItem.getLong("timestamp"));
@@ -244,9 +262,11 @@ public class Downloader {
                     DateTime d = new DateTime();
                     String liquidName = "liquid"+d.getYear()+""+d.getMonthOfYear()+""+d.getDayOfMonth();
                     String kcalName = "kcal"+d.getYear()+""+d.getMonthOfYear()+""+d.getDayOfMonth();
+                    String pheName = "phe"+d.getYear()+""+d.getMonthOfYear()+""+d.getDayOfMonth();
                     SharedPreferences.Editor editor = settings.edit();
                     editor.putFloat(kcalName, kcalSum);
                     editor.putFloat(liquidName, liquidSum);
+                    editor.putFloat(pheName, pheSum);
                     editor.commit();
                 } catch (Exception e) {
                     e.printStackTrace();

@@ -15,7 +15,7 @@ public enum FoodGroup {
     PROC_FRUIT("Proc. Fruit", "Verarbeitetes Obst", R.drawable.ic_action_food),
     VEGETABLES("Vegetables", "Gemüse", R.drawable.vegetables),
     PROC_VEGETABLES("Proc. Vegetables", "Verarbeitetes Gemüse", R.drawable.vegetables),
-    MEAT("Meat", "Fleisch- und Fischgerichte", R.drawable.ic_action_food),
+    MEAT("Meat", "Fleisch- und Fischgerichte", R.drawable.meat),
     INGREDIENT("Ingredient", "Grundzutat", R.drawable.ingredient);
 
     private String foodGroupName;

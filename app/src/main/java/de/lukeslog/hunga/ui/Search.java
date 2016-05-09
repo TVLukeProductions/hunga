@@ -43,8 +43,12 @@ import de.lukeslog.hunga.R;
 import de.lukeslog.hunga.model.Food;
 import de.lukeslog.hunga.model.Proposal;
 import de.lukeslog.hunga.model.ProposalHelper;
+import de.lukeslog.hunga.model.ProposalHelperCarbohydrates;
+import de.lukeslog.hunga.model.ProposalHelperFat;
 import de.lukeslog.hunga.model.ProposalHelperKcal;
 import de.lukeslog.hunga.model.ProposalHelperPhe;
+import de.lukeslog.hunga.model.ProposalHelperProtein;
+import de.lukeslog.hunga.model.ProposalHelperSalt;
 import de.lukeslog.hunga.model.Recipe;
 import de.lukeslog.hunga.rest.RestService;
 import de.lukeslog.hunga.support.HungaConstants;
@@ -203,6 +207,7 @@ public class Search extends FragmentActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         Logger.d(TAG, "WHAT?"+requestCode);
         if (requestCode == RC_SIGN_IN) {
+            Logger.d(TAG, "erfolg....");
             GoogleSignInResult result = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
             handleSignInResult(result);
         }
@@ -216,13 +221,15 @@ public class Search extends FragmentActivity {
             Logger.d(TAG, acct.getId());
             SharedPreferences defsettings = PreferenceManager.getDefaultSharedPreferences(this);
             SharedPreferences.Editor editor = defsettings.edit();
+
+            Logger.d(TAG, "------> "+acct.getIdToken());
             editor.putString("googleAccId", acct.getId());
             editor.putString("googleDisplayName", acct.getDisplayName());
             editor.commit();
 
         } else {
             // Signed out, show unauthenticated UI.
-            Logger.d(TAG, result.toString());
+            Logger.d(TAG, result.getStatus().toString());
         }
         setUpUi();
     }
@@ -234,7 +241,6 @@ public class Search extends FragmentActivity {
         new Delete().from(Proposal.class).execute();
         List<Recipe> recp = new Select().from(Recipe.class).execute();
         for(Recipe recipe : recp){
-            //TODO: decide if its a factor based on phe or kcal
             double factor = calculateFactor(recipe, limit);
             new ProposalHelperKcal().fillProposalWithFactor(recipe, factor);
         }
@@ -245,10 +251,18 @@ public class Search extends FragmentActivity {
         Logger.d(TAG, "calculate Factor...");
         SharedPreferences defsettings = PreferenceManager.getDefaultSharedPreferences(this);
         String searchtype = defsettings.getString("pref_typeselector", "");
-        if(searchtype.equals("phe")) {
-            return new ProposalHelperPhe().getFactorForGoal(recipe, limit);
+        if(searchtype.equals("Fett")) {
+            return new ProposalHelperFat().getFactorForGoal(recipe, limit, false);
+        } else  if( searchtype.equals("Phe")){
+            return new ProposalHelperPhe().getFactorForGoal(recipe, limit, false);
+        } else  if( searchtype.equals("Eiweis")){
+            return new ProposalHelperProtein().getFactorForGoal(recipe, limit, false);
+        } else  if( searchtype.equals("Kohlenhydrate")){
+            return new ProposalHelperCarbohydrates().getFactorForGoal(recipe, limit, false);
+        } else  if( searchtype.equals("Salz")){
+            return new ProposalHelperSalt().getFactorForGoal(recipe, limit, false);
         } else {
-            return new ProposalHelperKcal().getFactorForGoal(recipe, limit);
+            return new ProposalHelperKcal().getFactorForGoal(recipe, limit, false);
         }
     }
 

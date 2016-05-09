@@ -20,9 +20,44 @@
         android:ems="10"
         android:id="@+id/foodweight" />
 
+    <CheckBox
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Details"
+        android:textColor="#99cc00"
+        android:id="@+id/detailsCheckBox"
+        android:checked="false" />
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:id="@+id/datailsspace"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal">
+
+        <DatePicker
+            android:id="@+id/fooddate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:datePickerMode="spinner"
+            android:calendarViewShown="false"
+            android:layout_gravity="center_horizontal"/>
+
+        <TimePicker
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/timePicker"
+            android:layout_gravity="center_horizontal" />
+
+    </LinearLayout>
+
+
+
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="OK"
         android:id="@+id/foodweightbutton" />
+
+
 </LinearLayout>

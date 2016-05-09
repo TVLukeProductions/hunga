@@ -81,4 +81,14 @@ public abstract class FoodCombinationHelper {
         }
         return false;
     }
+
+    public static boolean containsPheApprox(Proposal fc) {
+        List<Ingredient> ingredients = getListOfIngredients(fc);
+        for(Ingredient ingredient : ingredients) {
+            if(ingredient.getFood().isPheValueApprox()) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

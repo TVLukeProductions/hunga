@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
@@ -14,6 +15,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.activeandroid.Model;
 import com.activeandroid.query.Select;
@@ -74,14 +76,30 @@ public class FoodActivity extends Activity {
 
             @Override
             public void onClick(View v) {
+                clickedAnimation(omnomnom);
                 SharedPreferences defsettings = PreferenceManager.getDefaultSharedPreferences(ctx);
                 String accid = defsettings.getString("googleAccId", "");
                 if(food.getIsItemGood()) {
-                    RestService.submitEatenFood(food, 1, "", accid);
+                    RestService.submitEatenFood(food, 1, "", accid, new Date().getTime());
                 } else {
-                    RestService.submitEatenFood(food, 100, "", accid);
+                    RestService.submitEatenFood(food, 100, "", accid, new Date().getTime());
                 }
-                ctx.finish();
+                showToast();
+            }
+        });
+
+        omnomnom.setOnLongClickListener(new View.OnLongClickListener() {
+
+            @Override
+            public boolean onLongClick(View v) {
+                clickedAnimation(omnomnom);
+                SharedPreferences defsettings = PreferenceManager.getDefaultSharedPreferences(ctx);
+                String accid = defsettings.getString("googleAccId", "");
+                Intent i = new Intent(ctx, FoodWeightActivity.class);
+                i.putExtra("barcodeForUse", food.getBarcodeForUse());
+                i.putExtra("accid", accid);
+                startActivity(i);
+                return true;
             }
         });
 
@@ -225,6 +243,9 @@ public class FoodActivity extends Activity {
             }
             invalidateOptionsMenu();
         }
+        if( id == R.id.action_cancel) {
+            ctx.finish();
+        }
         if (id == R.id.new_food_with_same_barcode) {
             Intent intent = new Intent(this, Scan.class);
             intent.putExtra("useScan", false);
@@ -240,6 +261,29 @@ public class FoodActivity extends Activity {
             intent.putExtra("sugarper100", ""+df.format(food.getSugarInCarbohydrate100()));
             intent.putExtra("proteinper100", ""+df.format(food.getProtein100()));
             intent.putExtra("saltper100", ""+df.format(food.getSalt100()));
+            intent.putExtra("pheper100", ""+df.format(food.getPhe100()));
+            intent.putExtra("foodGroup", food.getFoodGroup());
+            intent.putExtra("baseUnit", food.getBaseUnit());
+            intent.putExtra("weightPerItem", ""+df.format(food.getWeightPerServing()));
+
+            startActivity(intent);
+        }
+        if (id == R.id.correct_food) {
+            Intent intent = new Intent(this, Scan.class);
+            intent.putExtra("useScan", false);
+            intent.putExtra("productName", food.getName());
+            intent.putExtra("actBarcode", food.getBarcode());
+            intent.putExtra("barcodeForUse", food.getBarcodeForUse());
+            intent.putExtra("isItemGood", food.getIsItemGood());
+            intent.putExtra("solidFood", !food.isSolid());
+            intent.putExtra("kcalper100", ""+df.format(food.getKcal100()));
+            intent.putExtra("fatper100", ""+df.format(food.getFat100()));
+            intent.putExtra("satfatper100", ""+df.format(food.getSaturatedFattyAcids100()));
+            intent.putExtra("carboper100", ""+df.format(food.getCarbohydrate100()));
+            intent.putExtra("sugarper100", ""+df.format(food.getSugarInCarbohydrate100()));
+            intent.putExtra("proteinper100", ""+df.format(food.getProtein100()));
+            intent.putExtra("saltper100", ""+df.format(food.getSalt100()));
+            intent.putExtra("pheper100", ""+df.format(food.getPhe100()));
             intent.putExtra("foodGroup", food.getFoodGroup());
             intent.putExtra("baseUnit", food.getBaseUnit());
             intent.putExtra("weightPerItem", ""+df.format(food.getWeightPerServing()));
@@ -247,5 +291,36 @@ public class FoodActivity extends Activity {
             startActivity(intent);
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void clickedAnimation(final TextView textView) {
+        new Thread(new Runnable() {
+            public void run() {
+                try {
+                    runOnUiThread(new Runnable() {
+                        public void run() {
+                            textView.setBackgroundColor(Color.parseColor("#ffff66"));
+                        }
+                    });
+                    Thread.sleep(100);
+                    runOnUiThread(new Runnable() {
+                        public void run() {
+                            textView.setBackgroundColor(Color.parseColor("#99cc00"));
+                        }
+                    });
+                }catch(Exception e){
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+    }
+
+    private void showToast() {
+        Context context = getApplicationContext();
+        CharSequence text = "Abgeschickt";
+        int duration = Toast.LENGTH_SHORT;
+
+        Toast toast = Toast.makeText(context, text, duration);
+        toast.show();
     }
 }

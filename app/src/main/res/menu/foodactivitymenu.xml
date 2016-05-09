@@ -7,8 +7,19 @@
         android:icon="@drawable/ic_action_star_0"
         android:showAsAction="always" />
 
+    <item android:id="@+id/action_cancel"
+        android:title="@string/action_cancel"
+        android:orderInCategory="100"
+        android:icon="@drawable/ic_action_cancel"
+        android:showAsAction="always" />
+
     <item android:id="@+id/new_food_with_same_barcode"
         android:title="@string/new_food_with_same_barcode"
+        android:orderInCategory="100"
+        android:showAsAction="never" />
+
+    <item android:id="@+id/correct_food"
+        android:title="@string/correct_food"
         android:orderInCategory="100"
         android:showAsAction="never" />
 

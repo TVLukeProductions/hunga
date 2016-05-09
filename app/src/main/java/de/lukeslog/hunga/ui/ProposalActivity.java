@@ -1,12 +1,15 @@
 package de.lukeslog.hunga.ui;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.speech.tts.TextToSpeech;
+import android.text.Html;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -16,10 +19,12 @@ import android.widget.CompoundButton;
 import android.widget.LinearLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.activeandroid.query.Select;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
@@ -30,6 +35,8 @@ import de.lukeslog.hunga.model.Ingredient;
 import de.lukeslog.hunga.model.Proposal;
 import de.lukeslog.hunga.model.ProposalHelper;
 import de.lukeslog.hunga.model.ProposalHelperKcal;
+import de.lukeslog.hunga.model.ProposalHelperWeight;
+import de.lukeslog.hunga.rest.Downloader;
 import de.lukeslog.hunga.rest.RestService;
 import de.lukeslog.hunga.support.HungaConstants;
 import de.lukeslog.hunga.support.Logger;
@@ -119,12 +126,28 @@ public class ProposalActivity extends Activity {
 
             @Override
             public void onClick(View v) {
+                clickedAnimation(omnomnom);
                 proposal.save();
                 SharedPreferences defsettings = PreferenceManager.getDefaultSharedPreferences(ctx);
                 String accid = defsettings.getString("googleAccId", "");
-                RestService.submitEatenProposal(proposal, accid);
-                SharedPreferences sharedPref = SupportService.getDefaultSettings();
-                ctx.finish();
+                RestService.submitEatenProposal(proposal, accid, new Date().getTime());
+                showToast();
+            }
+        });
+
+        omnomnom.setOnLongClickListener(new View.OnLongClickListener() {
+
+            @Override
+            public boolean onLongClick(View v) {
+                clickedAnimation(omnomnom);
+                proposal.save();
+                SharedPreferences defsettings = PreferenceManager.getDefaultSharedPreferences(ctx);
+                String accid = defsettings.getString("googleAccId", "");
+                Intent i = new Intent(ctx, ProposalWeightActivity.class);
+                i.putExtra("proposaluid", proposal.getUid());
+                i.putExtra("accid", accid);
+                startActivity(i);
+                return true;
             }
         });
 
@@ -174,6 +197,9 @@ public class ProposalActivity extends Activity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
+        if (id == R.id.action_cancel) {
+            ctx.finish();
+        }
         /*
         if (id == R.id.action_cast) {
             //startService(new Intent(this, ChromecastService.class));
@@ -250,6 +276,13 @@ public class ProposalActivity extends Activity {
 
         TextView weightcontent = (TextView) findViewById(R.id.portion);
         weightcontent.setText(""+Math.round(proposal.getWeight())+" g");
+
+        TextView phelabel = (TextView) findViewById(R.id.phelabel);
+        if(ProposalHelper.containsPheApprox(proposal)) {
+            phelabel.setText(Html.fromHtml("phe<sup><small>1</small></sup>"));
+            TextView footNote = (TextView) findViewById(R.id.footnote2);
+            footNote.setText(Html.fromHtml("<sup><small>1</small></sup> Schätzwert"));
+        }
     }
 
     private void fillIngredients() {
@@ -462,5 +495,36 @@ public class ProposalActivity extends Activity {
             tts.speak(proposal.getName(),TextToSpeech.QUEUE_FLUSH,null,"loltest");
             Logger.d(TAG, "spoke");
         }
+    }
+
+    private void clickedAnimation(final TextView textView) {
+        new Thread(new Runnable() {
+            public void run() {
+                try {
+                    runOnUiThread(new Runnable() {
+                        public void run() {
+                            textView.setBackgroundColor(Color.parseColor("#ffff66"));
+                        }
+                    });
+                    Thread.sleep(100);
+                    runOnUiThread(new Runnable() {
+                        public void run() {
+                            textView.setBackgroundColor(Color.parseColor("#99cc00"));
+                        }
+                    });
+                }catch(Exception e){
+                    e.printStackTrace();
+                }
+            }
+        }).start();
+    }
+
+    private void showToast() {
+        Context context = getApplicationContext();
+        CharSequence text = "Abgeschickt";
+        int duration = Toast.LENGTH_SHORT;
+
+        Toast toast = Toast.makeText(context, text, duration);
+        toast.show();
     }
 }

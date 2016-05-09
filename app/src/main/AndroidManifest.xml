@@ -38,6 +38,14 @@
             android:theme="@android:style/Theme.Dialog">
         </activity>
         <activity
+            android:name=".ui.ProposalWeightActivity"
+            android:theme="@android:style/Theme.Dialog">
+        </activity>
+        <activity
+            android:name=".ui.FoodWeightActivity"
+            android:theme="@android:style/Theme.Dialog">
+        </activity>
+        <activity
             android:configChanges="orientation"
             android:screenOrientation="portrait"
             android:name=".ui.Scan"/>
@@ -51,7 +59,11 @@
         <service android:name=".chromecast.ChromecastService"/>
 
         <meta-data android:name="AA_DB_NAME" android:value="hunga.db" />
-        <meta-data android:name="AA_DB_VERSION" android:value="13" />
+        <meta-data android:name="AA_DB_VERSION" android:value="13" /><!-- ATTENTION: This was auto-generated to add Google Play services to your project for
+     App Indexing.  See https://g.co/AppIndexing/AndroidStudio for more information. -->
+        <meta-data
+            android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
 
     </application>
 

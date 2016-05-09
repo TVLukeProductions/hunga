@@ -861,17 +861,6 @@
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"/>
 
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            android:text="footnote"
-            android:textColor="#99cc00"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="0dp"
-            android:id="@+id/footnote" />
-
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

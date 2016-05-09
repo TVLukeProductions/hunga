@@ -1,11 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="pref_selecttype_names" >
-        <item>kcal</item>
+        <item>kCal</item>
         <item>Fett</item>
+        <item>Eiweis</item>
+        <item>Kohlenhydrate</item>
+        <item>Salz</item>
+        <item>Phe</item>
     </string-array>
     <string-array name="pref_selecttype_entries">
-        <item>kcal</item>
-        <item>fat</item>
+        <item>kCal</item>
+        <item>Fett</item>
+        <item>Eiweis</item>
+        <item>Kohlenhydrate</item>
+        <item>Salz</item>
+        <item>Phe</item>
     </string-array>
 </resources>

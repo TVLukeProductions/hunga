@@ -17,6 +17,12 @@
             android:key="goal_liquid"
             android:title="@string/goal_liquid"
             android:inputType="number"/>
+        <CheckBoxPreference
+            android:title="@string/pref_log_phe"
+            android:key="pref_log_phe"
+            android:icon="@drawable/ic_action_paste"
+            android:defaultValue="false">
+        </CheckBoxPreference>
     </PreferenceCategory>
     <PreferenceCategory
         android:title="@string/pref_basesettings_title"
@@ -43,12 +49,6 @@
         android:title="@string/pref_reload_title"
         android:key="pref_reload_title">
     </PreferenceCategory>
-    <CheckBoxPreference
-        android:title="@string/pref_log_phe"
-        android:key="pref_log_phe"
-        android:icon="@drawable/ic_action_paste"
-        android:defaultValue="false">
-    </CheckBoxPreference>
 
     <PreferenceCategory
         android:title="@string/pref_errors"

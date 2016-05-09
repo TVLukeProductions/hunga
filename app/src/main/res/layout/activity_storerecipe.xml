@@ -29,6 +29,12 @@
         android:ems="10"
         android:id="@+id/howMany" />
 
+    <CheckBox
+        android:layout_width="587dp"
+        android:layout_height="wrap_content"
+        android:text="Privat"
+        android:id="@+id/privateRecipe" />
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="50dp"

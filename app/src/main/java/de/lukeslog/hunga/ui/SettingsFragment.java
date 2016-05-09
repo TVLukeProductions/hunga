@@ -39,7 +39,7 @@ public class SettingsFragment extends PreferenceFragment {
 
         final PreferenceCategory pref = (PreferenceCategory) getPreferenceManager().findPreference("pref_reload_title");
         final Preference reloadLists = new Preference(getActivity());
-        reloadLists.setSummary("Listen aktualisieren");
+        reloadLists.setSummary("Daten aktualisieren");
         reloadLists.setIcon(R.drawable.ic_action_reload);
         reloadLists.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override

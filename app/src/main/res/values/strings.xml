@@ -11,7 +11,7 @@
     <string name="pref_basesettings_title">Grundeinstellungen Für die Suche</string>
     <string name="pref_typeselector">Suchwert</string>
     <string name="pref_typeselector_default">kcal</string>
-    <string name="pref_reload_title">Listen Laden</string>
+    <string name="pref_reload_title">Daten</string>
     <string name="action_sortphe">Phe</string>
     <string name="action_recepies">Rezepte</string>
     <string name="action_food">Nahrungsmittel</string>
@@ -83,4 +83,7 @@
     <string name="goal_kcal">Kalorien Ziel</string>
     <string name="goal_liquid">Flüssigkeit Ziel (ml)</string>
     <string name="action_protocoll">Protokoll</string>
+    <string name="action_cancel">Schließen</string>
+    <string name="pheper100g">Phe</string>
+    <string name="correct_food">Korrigieren</string>
 </resources>

@@ -22,6 +22,7 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import de.lukeslog.hunga.model.Food;
@@ -97,6 +98,7 @@ public class RestService extends Service {
                 HttpPost httppost = new HttpPost(urlForFoodRegistration);
                 List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>();
                 nameValuePairs.add(new BasicNameValuePair("barcode", food.getBarcode()));
+                nameValuePairs.add(new BasicNameValuePair("barcodeForUse", food.getBarcodeForUse()));
                 nameValuePairs.add(new BasicNameValuePair("name", food.getName()));
                 nameValuePairs.add(new BasicNameValuePair("basismenge", ""+food.getBasisMenge()));
                 nameValuePairs.add(new BasicNameValuePair("basiseinheit", ""+food.getBaseUnit()));
@@ -134,7 +136,7 @@ public class RestService extends Service {
 
     }
 
-    public static void submitEatenProposal(final Proposal proposal, final String userAcc) {
+    public static void submitEatenProposal(final Proposal proposal, final String userAcc, final long timestamp) {
         new Thread(new Runnable() {
             public void run() {
                 Logger.d(TAG, "submit proposal");
@@ -142,7 +144,7 @@ public class RestService extends Service {
                 Logger.d(TAG, ""+listOfFoods.size());
                 for(int i=0; i<listOfFoods.size(); i++) {
                     Logger.d(TAG, listOfFoods.get(i).getFood().getName());
-                    submitEatenFood(listOfFoods.get(i).getFood(), listOfFoods.get(i).getAmount(), proposal.getName(), userAcc);
+                    submitEatenFood(listOfFoods.get(i).getFood(), listOfFoods.get(i).getAmount(), proposal.getName(), userAcc, timestamp);
                     try {
                         //Because google docs do not take kindly to fast requests...
                         Thread.sleep(10000);
@@ -154,7 +156,7 @@ public class RestService extends Service {
         }).start();
     }
 
-    public static void submitEatenFood(final Food food, final double amount, final String recipe, final String userAcc) {
+    public static void submitEatenFood(final Food food, final double amount, final String recipe, final String userAcc, final long timestamp) {
         new Thread(new Runnable() {
             public void run() {
                 Log.d(TAG, "RUN");
@@ -176,6 +178,7 @@ public class RestService extends Service {
                 nameValuePairs.add(new BasicNameValuePair("baseunit", HungaUtils.getUnit(food)));
                 nameValuePairs.add(new BasicNameValuePair("name", food.getName()));
                 nameValuePairs.add(new BasicNameValuePair("recipe", recipe));
+                nameValuePairs.add(new BasicNameValuePair("timestamp", ""+timestamp));
                 try {
                     httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
                     HttpResponse response = httpclient.execute(httppost);
@@ -188,12 +191,15 @@ public class RestService extends Service {
                 DecimalFormat df = new DecimalFormat("0.00");
                 DateTime d = new DateTime();
                 String kcalName = "kcal"+d.getYear()+""+d.getMonthOfYear()+""+d.getDayOfMonth();
+                String pheName = "phe"+d.getYear()+""+d.getMonthOfYear()+""+d.getDayOfMonth();
                 String liquidName = "liquid"+d.getYear()+""+d.getMonthOfYear()+""+d.getDayOfMonth();
                 final SharedPreferences settings = context.getSharedPreferences("currentkcal", 0);
                 float currentkcal = settings.getFloat(kcalName, 0.0f);
+                float curentPhe = settings.getFloat(pheName, 0.0f);
                 float currentliquid = settings.getFloat(liquidName, 0.0f);
                 SharedPreferences.Editor editable = settings.edit();
                 editable.putFloat(kcalName, (float) (currentkcal + ((+a/100)*food.getKcal100())));
+                editable.putFloat(pheName, (float) (curentPhe + ((+a/100)*food.getPhe100())));
                 if(!food.isSolid()) {
                     editable.putFloat(liquidName, (float) (currentliquid+a));
                 }
@@ -202,17 +208,20 @@ public class RestService extends Service {
         }).start();
     }
 
-    public static void submitRecipe(final Recipe recipe) {
+    public static void submitRecipe(final Recipe recipe, final String userAcc, final boolean privateRecipe) {
         new Thread(new Runnable() {
             public void run() {
                 HttpClient httpclient = new DefaultHttpClient();
                 HttpPost httppost = new HttpPost(urlForRecipeLog);
                 List<NameValuePair> nameValuePairs = new ArrayList<>();
+                Log.d(TAG, recipe.getUid());
+                Log.d(TAG, userAcc);
+                nameValuePairs.add(new BasicNameValuePair("accountId", userAcc));
                 nameValuePairs.add(new BasicNameValuePair("uid", recipe.getUid()));
                 nameValuePairs.add(new BasicNameValuePair("name", recipe.getName()));
                 nameValuePairs.add(new BasicNameValuePair("fixedPropostions", ""+false));
-                Logger.d(TAG, "FOR PERSONS"+recipe.getForPersons());
                 nameValuePairs.add(new BasicNameValuePair("howMany", ""+recipe.getForPersons()));
+                nameValuePairs.add(new BasicNameValuePair("private", ""+privateRecipe));
                 JSONArray jIngredients = new JSONArray();
                 for(Ingredient ingredient : RecipeHelper.getListOfIngredients(recipe)) {
                     JSONObject jIngredient = new JSONObject();
@@ -228,7 +237,7 @@ public class RestService extends Service {
                 try {
                     httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
                     HttpResponse response = httpclient.execute(httppost);
-                    Log.d(TAG, "RESPONSE: "+response.toString());
+                    Log.d(TAG, "RESPONSE: "+response.getStatusLine());
                 } catch (IOException e) {
                     Log.d(TAG, "e"+e.getLocalizedMessage());
                     e.printStackTrace();
@@ -280,7 +289,7 @@ public class RestService extends Service {
     }
 
 
-    public static void correctScan(final long timestamp, final String userAcc, final String barcodeForUse, final double newAmount) {
+    public static void correctScan(final long timestamp, final String userAcc, final String barcodeForUse, final double newAmount, final long newTimestamp) {
         new Thread(new Runnable() {
             public void run() {
                 HttpClient httpclient = new DefaultHttpClient();
@@ -291,6 +300,7 @@ public class RestService extends Service {
                 nameValuePairs.add(new BasicNameValuePair("userAccountId", userAcc));
                 nameValuePairs.add(new BasicNameValuePair("barcode", barcodeForUse));
                 nameValuePairs.add(new BasicNameValuePair("newAmount", ""+newAmount));
+                nameValuePairs.add(new BasicNameValuePair("newTimestamp", ""+newTimestamp));
                 try {
                     httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
                     HttpResponse response = httpclient.execute(httppost);

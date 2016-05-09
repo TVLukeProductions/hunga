@@ -1,13 +1,13 @@
 {
   "project_info": {
-    "project_id": "hungadebug-b8607",
-    "project_number": "334621414691",
-    "name": "hungadebug"
+    "project_id": "hunga-ef32a",
+    "project_number": "1077943330160",
+    "name": "Hunga"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:334621414691:android:6f22b4b671758108",
+        "mobilesdk_app_id": "1:1077943330160:android:6f22b4b671758108",
         "client_id": "android:de.lukeslog.hunga",
         "client_type": 1,
         "android_client_info": {
@@ -16,11 +16,11 @@
       },
       "oauth_client": [
         {
-          "client_id": "334621414691-4lknenvaameci90hljqapihcpmbo7t3s.apps.googleusercontent.com",
+          "client_id": "1077943330160-mf4h7h7pn2lvkvfndmuf4r7n3ucci1s1.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "de.lukeslog.hunga",
-            "certificate_hash": "4C11307D1708E73857AFCB00331B1958D8F00F46"
+            "certificate_hash": "79A067405BD602F746D1E194AA59A8879355D1AD"
           }
         }
       ],

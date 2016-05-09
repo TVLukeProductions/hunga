@@ -7,6 +7,12 @@
         android:icon="@drawable/ic_action_barcode_1"
         android:showAsAction="always" />
 
+    <item android:id="@+id/action_cancel"
+        android:title="@string/action_cancel"
+        android:orderInCategory="100"
+        android:icon="@drawable/ic_action_cancel"
+        android:showAsAction="always" />
+
     <item android:id="@+id/action_settings"
         android:title="@string/action_settings"
         android:orderInCategory="100"

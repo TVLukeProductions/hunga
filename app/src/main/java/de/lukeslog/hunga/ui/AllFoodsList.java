@@ -3,6 +3,7 @@ package de.lukeslog.hunga.ui;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -15,6 +16,9 @@ import android.widget.EditText;
 import android.widget.ListView;
 
 import com.activeandroid.query.Select;
+import com.google.android.gms.appindexing.Action;
+import com.google.android.gms.appindexing.AppIndex;
+import com.google.android.gms.common.api.GoogleApiClient;
 
 import java.util.List;
 
@@ -27,7 +31,7 @@ import de.lukeslog.hunga.support.Logger;
 public class AllFoodsList extends Activity {
 
     public static final String TAG = HungaConstants.TAG;
-    Context ctx;
+    Activity ctx;
     private List<Food> foodlist;
     FoodAdapter adapter;
 
@@ -63,8 +67,8 @@ public class AllFoodsList extends Activity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                Logger.d(TAG, "s="+s);
-                if(s.equals("")) {
+                Logger.d(TAG, "s=" + s);
+                if (s.equals("")) {
                     foodlist = new Select().from(Food.class).orderBy("name ASC").execute();
                 } else {
                     foodlist = new Select().from(Food.class).where("name LIKE '%" + s + "%' OR equivalenceGroup LIKE '%" + s + "%'").orderBy("name ASC").execute();
@@ -91,6 +95,9 @@ public class AllFoodsList extends Activity {
     @Override
     public void onResume() {
         super.onResume();
+        //EditText searchfield = (EditText) findViewById(R.id.searchForFood);
+        //String s = searchfield.getEditableText().toString();
+        //foodlist = new Select().from(Food.class).where("name LIKE '%" + s + "%' OR equivalenceGroup LIKE '%" + s + "%'").orderBy("name ASC").execute();
         adapter.notifyDataSetChanged();
     }
 
@@ -100,8 +107,11 @@ public class AllFoodsList extends Activity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-        if(id == R.id.action_scan) {
+        if (id == R.id.action_scan) {
             startScanActivity();
+        }
+        if( id == R.id.action_cancel) {
+            ctx.finish();
         }
         if (id == R.id.action_settings) {
             startSettingsActivity();
@@ -118,5 +128,15 @@ public class AllFoodsList extends Activity {
     private void startSettingsActivity() {
         final Intent intent = new Intent(this, SettingsActivity.class);
         startActivity(intent);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
     }
 }

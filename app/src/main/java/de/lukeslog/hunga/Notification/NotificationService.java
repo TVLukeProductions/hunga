@@ -72,18 +72,26 @@ public class NotificationService extends Service {
                 DateTime d = new DateTime();
                 String liquidName = "liquid"+d.getYear()+""+d.getMonthOfYear()+""+d.getDayOfMonth();
                 String kcalName = "kcal"+d.getYear()+""+d.getMonthOfYear()+""+d.getDayOfMonth();
+                String pheName = "phe"+d.getYear()+""+d.getMonthOfYear()+""+d.getDayOfMonth();
                 Float kcal = settings.getFloat(kcalName, 0.0f);
                 Float liquid = settings.getFloat(liquidName, 0.0f);
+                Float phe = settings.getFloat(pheName, 0.0f);
                 Log.d(TAG, ""+kcal);
                 PendingIntent pi = intentToMyActivity();
                 int color = selectAppropriateColor(kcal);
+                String notificationText = df.format(kcal) + " kcal. (" + df.format(liquid) + " ml)";
+                SharedPreferences defsettings = PreferenceManager.getDefaultSharedPreferences(ctx);
+                boolean logPhe = defsettings.getBoolean("pref_log_phe", false);
+                if(logPhe) {
+                    notificationText = df.format(kcal) + " kcal/"+df.format(phe)+" phe (" + df.format(liquid) + " ml)";
+                }
                 NotificationCompat.Builder mBuilder =
                         new NotificationCompat.Builder(ctx)
                                 .setSmallIcon(R.drawable.hunga72)
                                 .setContentTitle("Ernährung")
                                 .setContentIntent(pi)
                                 .setColor(color)
-                                .setContentText("Aktueller Stand: "+df.format(kcal)+" kcal. ("+df.format(liquid)+" ml)");
+                                .setContentText(notificationText);
                 NotificationManager mNotificationManager =
                         (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
                 // mId allows you to update the notification later on.
@@ -109,7 +117,7 @@ public class NotificationService extends Service {
         String kcalgoalString = defsettings.getString("goal_kcal", "0");
         int kcalgoal = Integer.parseInt(kcalgoalString);
         if(kcalgoal>0) {
-            if(kcal>kcalgoal) {
+            if(kcal>kcalgoal/100*110) {
                 return COLOR_RED;
             }
             if(kcal>(kcalgoal/100*90)) {

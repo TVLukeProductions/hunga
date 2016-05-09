@@ -5,7 +5,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.activeandroid.query.Select;
@@ -46,6 +48,13 @@ public class FoodSetting extends Activity {
         }
         final EditText editText = (EditText) findViewById(R.id.foodweight);
         editText.setText(""+Math.round(ingredient.getAmount()));
+
+        final LinearLayout datailsspace = (LinearLayout) findViewById(R.id.datailsspace);
+        datailsspace.setVisibility(View.GONE);
+
+        final CheckBox detailsCheckBox = (CheckBox) findViewById(R.id.detailsCheckBox);
+        detailsCheckBox.setVisibility(View.GONE);
+
         Button foodweightButton = (Button) findViewById(R.id.foodweightbutton);
         foodweightButton.setOnClickListener(new View.OnClickListener() {
 

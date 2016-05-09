@@ -8,7 +8,7 @@ import de.lukeslog.hunga.support.Logger;
 public class ProposalHelperPhe extends ProposalHelper {
 
     @Override
-    protected double getRelevantValueFor100Grams(Food ingredient) {
-        return ingredient.getPhe100();
+    protected double getRelevantValueFor100Grams(Ingredient ingredient) {
+        return ingredient.getFood().getPhe100();
     }
 }

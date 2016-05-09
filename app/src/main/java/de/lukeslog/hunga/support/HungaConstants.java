@@ -4,7 +4,7 @@ public class HungaConstants {
 
     public static final String TAG ="HungaApp";
 
-    public static final String urlForFoodRegistration = "https://script.google.com/macros/s/AKfycbzElm4HNvcMb4XKvd0w0zaLwAFi7TyOKaIXMgFHI-92PXFqyXw/exec";
+    public static final String urlForFoodRegistration = "https://script.google.com/macros/s/AKfycbz77RDr62GwkB8VSU4PcsXGbtrukDqtAThRnsnIopRJKS28Uoxx/exec";
     public static final String urlforFoodLog = "https://script.google.com/macros/s/AKfycbzXJJp8m5sXsbdYNsjtxsu8rJ4QTMIBUQNd4xss28lElMC2PTKY/exec";
     public static final String urlForRecipeLog = "https://script.google.com/macros/s/AKfycbzOrzG-FihHLynDYVLMZgIZoqMdABbuMoIqWnapnVRdbBG8tNBP/exec";
     public static final String addToFavUrl = "https://script.google.com/macros/s/AKfycbxZYS4iQRN9sPkLNPLQdQqPYMbtywZXRlyfxe06SGKuEiOTKRNn/exec";

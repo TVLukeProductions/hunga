@@ -7,6 +7,7 @@ import android.media.AudioManager;
 import android.media.ToneGenerator;
 import android.os.Bundle;
 import android.os.Vibrator;
+import android.support.annotation.NonNull;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -49,8 +50,8 @@ public class Scan extends Activity implements ZXingScannerView.ResultHandler {
         mScannerView = new ZXingScannerView(this);   // Programmatically initialize the scanner view
         proposalName = getIntent().getStringExtra("proposal");
         boolean useScan = getIntent().getBooleanExtra("useScan", true);
-        Logger.d(TAG, "PROPOSAL NAME?"+proposalName);
-        if(useScan) {
+        Logger.d(TAG, "PROPOSAL NAME?" + proposalName);
+        if (useScan) {
             setContentView(mScannerView);                // Set the scanner view as the content view
             startScanner();
         } else {
@@ -65,7 +66,7 @@ public class Scan extends Activity implements ZXingScannerView.ResultHandler {
         mScannerView.setResultHandler(this); // Register ourselves as a handler for scan results.
         try {
             mScannerView.startCamera();          // Start camera on resume
-        } catch(RuntimeException rte) {
+        } catch (RuntimeException rte) {
 
         }
     }
@@ -76,7 +77,7 @@ public class Scan extends Activity implements ZXingScannerView.ResultHandler {
         final String barcode = rawResult.getText();
 
         playBeep();
-        
+
         prefillDataIfPossible();
 
         handleBarcode(barcode);
@@ -112,7 +113,7 @@ public class Scan extends Activity implements ZXingScannerView.ResultHandler {
     }
 
     private void openFoodActivity(String barcode) {
-        if(proposalName != null) {
+        if (proposalName != null) {
             Intent returnIntent = new Intent();
             returnIntent.putExtra("barcode", barcode);
             setResult(RESULT_OK, returnIntent);
@@ -132,7 +133,7 @@ public class Scan extends Activity implements ZXingScannerView.ResultHandler {
 
     private void selectProduct(String barcode) {
         Log.d(TAG, "selectProduct...");
-        if(multipleResultsForBarcode(barcode)) {
+        if (multipleResultsForBarcode(barcode)) {
             Log.d(TAG, "multiple times in db...");
             startActivityToSelectOneProduct(barcode);
         } else {
@@ -168,6 +169,7 @@ public class Scan extends Activity implements ZXingScannerView.ResultHandler {
         final EditText sugar100E = (EditText) findViewById(R.id.sugarper100g);
         final EditText protein100E = (EditText) findViewById(R.id.proteinper100g);
         final EditText salt100E = (EditText) findViewById(R.id.saltper100g);
+        final EditText phe100E = (EditText) findViewById(R.id.pheper100g);
 
         final CheckBox addSugar = (CheckBox) findViewById(R.id.additionalSugar);
         final CheckBox unprocessed = (CheckBox) findViewById(R.id.unprocessedFood);
@@ -176,11 +178,11 @@ public class Scan extends Activity implements ZXingScannerView.ResultHandler {
         final CheckBox rennetAlt = (CheckBox) findViewById(R.id.rennetAlt);
 
         String barcodeForUse = getIntent().getStringExtra("barcodeForUse");
-        if(barcodeForUse == null || barcodeForUse.equals("")) {
+        if (barcodeForUse == null || barcodeForUse.equals("")) {
             barcodeForUse = barcode;
         }
         String actualbarcode = getIntent().getStringExtra("actBarcode");
-        if(actualbarcode != null && !actualbarcode.equals("")) {
+        if (actualbarcode != null && !actualbarcode.equals("")) {
             barcode = actualbarcode;
         }
         productName.setText(getIntent().getStringExtra("productName"));
@@ -193,8 +195,9 @@ public class Scan extends Activity implements ZXingScannerView.ResultHandler {
         sugar100E.setText(getIntent().getStringExtra("sugarper100"));
         protein100E.setText(getIntent().getStringExtra("proteinper100"));
         salt100E.setText(getIntent().getStringExtra("saltper100"));
+        phe100E.setText(getIntent().getStringExtra("pheper100"));
 
-        if(getIntent().getStringExtra("foodGroup") != null && !getIntent().getStringExtra("foodGroup").equals("")) {
+        if (getIntent().getStringExtra("foodGroup") != null && !getIntent().getStringExtra("foodGroup").equals("")) {
             for (int i = 0; i < foodGroupSpinner.getAdapter().getCount(); i++) {
                 String fname = FoodGroup.getFoodGroupByFoodGroupName(getIntent().getStringExtra("foodGroup")).getFoodGroupPrintName();
                 if (foodGroupSpinner.getAdapter().getItem(i).toString().equals(fname)) {
@@ -203,7 +206,7 @@ public class Scan extends Activity implements ZXingScannerView.ResultHandler {
             }
         }
 
-        if(getIntent().getStringExtra("baseUnit")!=  null && !getIntent().getStringExtra("baseUnit").equals("")) {
+        if (getIntent().getStringExtra("baseUnit") != null && !getIntent().getStringExtra("baseUnit").equals("")) {
             for (int i = 0; i < baseUnitSpinner.getAdapter().getCount(); i++) {
                 if (baseUnitSpinner.getAdapter().getItem(i).toString().equals(getIntent().getStringExtra("baseUnit"))) {
                     baseUnitSpinner.setSelection(i);
@@ -228,20 +231,22 @@ public class Scan extends Activity implements ZXingScannerView.ResultHandler {
                 boolean isItem = isItemCheckBox.isChecked();
                 String weightperItem = weightperItemEditText.getEditableText().toString();
 
-                if(!name.equals("") && (!isItem || !weightperItem.equals(""))) {
-                    Food f = new Food();
+                if (!name.equals("") && (!isItem || !weightperItem.equals(""))) {
+                    Food f = findOrCreateFood(finalBarcodeForUse);
                     f.setBarcode(finalBarcode);
                     f.setBarcodeForUse(finalBarcodeForUse);
                     f.setName(name);
                     final FoodGroup foodGroup = FoodGroup.getFoodGroupByFoodGroupPrintName(foodGroupSpinner.getSelectedItem().toString());
                     f.setFoodGroup(foodGroup.getFoodGroupName());
                     f.setIsItemGood(isItemCheckBox.isChecked());
-                    if(isItemCheckBox.isChecked()) {
+                    if (isItemCheckBox.isChecked()) {
                         f.setBaseUnit(baseUnitSpinner.getSelectedItem().toString());
                         f.setBasisMenge(1.0);
-                        f.setWeightPerServing(Double.parseDouble(weightPerItemEditText.getEditableText().toString()));
+                        String wpi = weightPerItemEditText.getEditableText().toString();
+                        wpi = wpi.replace(",", ".");
+                        f.setWeightPerServing(Double.parseDouble(wpi));
                     } else {
-                        if(!isSolidCheckBox.isChecked()) {
+                        if (!isSolidCheckBox.isChecked()) {
                             f.setBaseUnit("g");
                         } else {
                             f.setBaseUnit("ml");
@@ -250,43 +255,47 @@ public class Scan extends Activity implements ZXingScannerView.ResultHandler {
                         f.setWeightPerServing(100.0);
                     }
                     f.setSolid(!isSolidCheckBox.isChecked());
-                    if(!kcal100E.getEditableText().toString().equals("")) {
-                        f.setKcal100(Double.parseDouble(kcal100E.getEditableText().toString()));
+                    if (!kcal100E.getEditableText().toString().equals("")) {
+                        f.setKcal100(Double.parseDouble(kcal100E.getEditableText().toString().replace(",", ".")));
                     }
-                    if(!fat100E.getEditableText().toString().equals("")) {
-                        f.setFat100(Double.parseDouble(fat100E.getEditableText().toString()));
+                    if (!fat100E.getEditableText().toString().equals("")) {
+                        f.setFat100(Double.parseDouble(fat100E.getEditableText().toString().replace(",", ".")));
                     }
-                    if(!satfat100E.getEditableText().toString().equals("")) {
-                        f.setSaturatedFattyAcids100(Double.parseDouble(satfat100E.getEditableText().toString()));
+                    if (!satfat100E.getEditableText().toString().equals("")) {
+                        f.setSaturatedFattyAcids100(Double.parseDouble(satfat100E.getEditableText().toString().replace(",", ".")));
                     }
-                    if(!carbo100E.getEditableText().toString().equals("")) {
-                        f.setCarbohydrate100(Double.parseDouble(carbo100E.getEditableText().toString()));
+                    if (!carbo100E.getEditableText().toString().equals("")) {
+                        f.setCarbohydrate100(Double.parseDouble(carbo100E.getEditableText().toString().replace(",", ".")));
                     }
-                    if(!sugar100E.getEditableText().toString().equals("")) {
-                        f.setSugarInCarbohydrate100(Double.parseDouble(sugar100E.getEditableText().toString()));
+                    if (!sugar100E.getEditableText().toString().equals("")) {
+                        f.setSugarInCarbohydrate100(Double.parseDouble(sugar100E.getEditableText().toString().replace(",", ".")));
                     }
-                    if(!protein100E.getEditableText().toString().equals("")) {
-                        f.setProtein100(Double.parseDouble(protein100E.getEditableText().toString()));
+                    if (!protein100E.getEditableText().toString().equals("")) {
+                        f.setProtein100(Double.parseDouble(protein100E.getEditableText().toString().replace(",", ".")));
                     }
-                    if(!salt100E.getEditableText().toString().equals("")) {
-                        f.setSalt100(Double.parseDouble(salt100E.getEditableText().toString()));
+                    if (!salt100E.getEditableText().toString().equals("")) {
+                        f.setSalt100(Double.parseDouble(salt100E.getEditableText().toString().replace(",", ".")));
+                    }
+                    if (!phe100E.getEditableText().toString().equals("")) {
+                        f.setPhe100(Double.parseDouble(phe100E.getEditableText().toString().replace(",", ".")));
+                    } else {
+                        double calculatedPheValue = -1;
+                        if (protein100E.getEditableText().toString() != null && !protein100E.getEditableText().toString().equals("")) {
+                            double phefactor = 50;
+                            if (foodGroup == FoodGroup.VEGETABLES) {
+                                phefactor = 30;
+                            } else if (foodGroup == FoodGroup.FRUIT) {
+                                phefactor = 40;
+                            }
+                            calculatedPheValue = phefactor * Double.parseDouble(protein100E.getEditableText().toString().replace(",", "."));
+                        }
+                        f.setPhe100(calculatedPheValue);
                     }
                     f.setAdditionalSugar(addSugar.isChecked());
                     f.setUnproccessed(unprocessed.isChecked());
                     f.setContainsCaffein(continsCaffein.isChecked());
                     f.setContainsAlcohol(contaisnAlc.isChecked());
                     f.setLabaustauschstoff(rennetAlt.isChecked());
-                    double calculatedPheValue = -1;
-                    if(protein100E.getEditableText().toString() != null && !protein100E.getEditableText().toString().equals("")) {
-                        double phefactor = 50;
-                        if (foodGroup == FoodGroup.VEGETABLES) {
-                            phefactor = 30;
-                        } else if (foodGroup == FoodGroup.FRUIT) {
-                            phefactor = 40;
-                        }
-                        calculatedPheValue = phefactor * Double.parseDouble(protein100E.getEditableText().toString());
-                    }
-                    f.setPhe100(calculatedPheValue);
                     f.save();
                     RestService.submitNewFood(f);
                     openFoodActivity(finalBarcode);
@@ -297,18 +306,28 @@ public class Scan extends Activity implements ZXingScannerView.ResultHandler {
         });
     }
 
+    @NonNull
+    private Food findOrCreateFood(String barcodeForUse) {
+        Food food = getFoodFromBarcodeForUse(barcodeForUse);
+        if(food == null) {
+            return new Food();
+        } else {
+            return food;
+        }
+    }
+
     private void adaptBasedOnType() {
         final Spinner itemTypeSpinner = (Spinner) findViewById(R.id.itemTypeSpinner);
         final TextView weightPerItemLabel = (TextView) findViewById(R.id.weightPerItemLabel);
         String itemType = itemTypeSpinner.getSelectedItem().toString();
-        weightPerItemLabel.setText("Gewicht pro "+itemType);
+        weightPerItemLabel.setText("Gewicht pro " + itemType);
 
         itemTypeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 String itemType = itemTypeSpinner.getSelectedItem().toString();
-                weightPerItemLabel.setText("Gewicht pro "+itemType);
+                weightPerItemLabel.setText("Gewicht pro " + itemType);
             }
 
             @Override
@@ -337,7 +356,7 @@ public class Scan extends Activity implements ZXingScannerView.ResultHandler {
     }
 
     private boolean multipleResultsForBarcode(String barcode) {
-        return getProductsFromBarcode(barcode).size()>1;
+        return getProductsFromBarcode(barcode).size() > 1;
     }
 
     private boolean isProductWithBarcodeInDatabase(String barcode) {
@@ -346,21 +365,21 @@ public class Scan extends Activity implements ZXingScannerView.ResultHandler {
 
     private void startActivityToSelectOneProduct(String barcode) {
         Intent i = new Intent(ctx, FoodSelector.class);
-        i.putExtra("barcode", ""+barcode);
+        i.putExtra("barcode", "" + barcode);
         Log.d(TAG, "start Activity for result...");
         startActivityForResult(i, RESULT_FOR_PRODUCT_SELECTION);
     }
 
     private List<Food> getProductsFromBarcode(String barcode) {
-        Log.d(TAG, "already in the system?"+barcode);
+        Log.d(TAG, "already in the system?" + barcode);
         List<Food> products = new Select().from(Food.class).where("barcode = ?", barcode).execute();
-        Logger.d(TAG, ""+products.size());
+        Logger.d(TAG, "" + products.size());
         return products;
     }
 
     private void playBeep() {
         AudioManager audio = (AudioManager) this.getSystemService(Context.AUDIO_SERVICE);
-        switch( audio.getRingerMode() ){
+        switch (audio.getRingerMode()) {
             case AudioManager.RINGER_MODE_NORMAL:
                 playBeepViaSound();
                 break;
@@ -409,7 +428,7 @@ public class Scan extends Activity implements ZXingScannerView.ResultHandler {
 
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                if(isChecked) {
+                if (isChecked) {
                     itemTypeLabel.setVisibility(View.VISIBLE);
                     itemTypeSpinner.setVisibility(View.VISIBLE);
                     weightPerItemLabel.setVisibility(View.VISIBLE);
@@ -434,9 +453,9 @@ public class Scan extends Activity implements ZXingScannerView.ResultHandler {
                 .orderBy("baseUnit ASC")
                 .execute();
         List<String> itemTypes = new ArrayList<>();
-        Logger.d(TAG, ""+foods.size());
-        for(int i=0; i<foods.size(); i++) {
-            if(foods.get(i).getBaseUnit() != null
+        Logger.d(TAG, "" + foods.size());
+        for (int i = 0; i < foods.size(); i++) {
+            if (foods.get(i).getBaseUnit() != null
                     && !itemTypes.contains(foods.get(i).getBaseUnit())) {
                 itemTypes.add(foods.get(i).getBaseUnit());
                 Logger.d(TAG, "->" + foods.get(i).getBaseUnit());

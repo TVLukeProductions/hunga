@@ -195,9 +195,9 @@ public abstract class ProposalHelper extends FoodCombinationHelper {
         return pheSum;
     }
 
-    public double getFactorForGoal(FoodCombination fc, double goal) {
+    public double getFactorForGoal(FoodCombination fc, double goal, boolean presision) {
         if(containsItemGood(fc)) {
-            return getFactorForGoalWithItemGood(fc, goal);
+            return getFactorForGoalWithItemGood(fc, goal, presision);
         } else {
             return getFactorForGoalWithoutItemGood(fc, goal);
         }
@@ -209,7 +209,8 @@ public abstract class ProposalHelper extends FoodCombinationHelper {
         ArrayList<Double> valuePerItem = new ArrayList<Double>();
 
         for(int i=0; i<ingredients.size(); i++) {
-            Food ingredient = ingredients.get(i).getFood();
+            Ingredient ingredient = ingredients.get(i);
+
             Double amount = ingredients.get(i).getAmount();
             double value100 = getRelevantValueFor100Grams(ingredient);
             valuePerItem.add(value100*(amount/100.0));
@@ -223,36 +224,47 @@ public abstract class ProposalHelper extends FoodCombinationHelper {
         return goal/sumOfValue;
     }
 
-    protected double getFactorForGoalWithItemGood(FoodCombination recipe, double goal){
+    protected double getFactorForGoalWithItemGood(FoodCombination recipe, double goal, boolean presision){
         double factor = 0.0;
         Logger.d(TAG, "->"+recipe.getName());
         List<Ingredient> ingredients = getListOfIngredients(recipe);
         ArrayList<Double> valuePerItem = new ArrayList<Double>();
 
         for(int i=0; i<ingredients.size(); i++) {
-            Food ingredient = ingredients.get(i).getFood();
+            Ingredient ingredient = ingredients.get(i);
+            Food food = ingredient.getFood();
             Double amount = ingredients.get(i).getAmount();
             double value100 = getRelevantValueFor100Grams(ingredient);
-            if(ingredient.getIsItemGood()) {
-                valuePerItem.add((value100/100*ingredient.getWeightPerServing())*amount);
+            if(food.getIsItemGood()) {
+                valuePerItem.add((value100/100*food.getWeightPerServing())*amount);
             } else {
                 valuePerItem.add(value100 * (amount / 100.0));
             }
         }
 
-        double result = 0.0;
-        while(result<goal) {
-            result = 0.0;
-            factor = factor + 0.5;
-            for (int i = 0; i < ingredients.size(); i++) {
-                result = result + valuePerItem.get(i)*factor;
+        if(presision) {
+            double sumOfValue = 0.0;
+            for (double pheItem : valuePerItem) {
+                sumOfValue  = sumOfValue  + pheItem;
             }
+
+            factor = goal/sumOfValue;
+        } else {
+
+            double result = 0.0;
+            while (result < goal) {
+                result = 0.0;
+                factor = factor + 0.5;
+                for (int i = 0; i < ingredients.size(); i++) {
+                    result = result + valuePerItem.get(i) * factor;
+                }
+            }
+            factor = factor - 0.5;
+            Logger.d(TAG, "--->" + factor);
         }
-        factor = factor - 0.5;
-        Logger.d(TAG, "--->"+factor);
         return factor;
     }
 
-    protected abstract double getRelevantValueFor100Grams(Food ingredient);
+    protected abstract double getRelevantValueFor100Grams(Ingredient ingredient);
 
 }
